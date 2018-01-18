@@ -39,7 +39,7 @@ public class QnaController {
 	//Write (Insert)
 		@RequestMapping(value="qnaWrite", method=RequestMethod.GET)
 		public String qnaWrite(Model model) throws Exception{
-			model.addAttribute("board", "notice");
+			model.addAttribute("board", "qna");
 			return "board/boardWrite";
 		}
 		@RequestMapping(value="qnaWrite", method=RequestMethod.POST)
