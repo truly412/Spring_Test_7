@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeMapper">
+
+	<!-- DB에서 TotalCount 가져오기 -->
+	<select id="totalCount" resultType="int" parameterType="ListData">
+		select nvl(count(num), 0) from notice 
+		<if test="kind == 'title'">
+			where title like '%'||#{search}||'%'
+		</if>
+		<if test="kind == 'writer'">
+			where writer like '%'||#{search}||'%'
+		</if>
+		<if test="kind == 'contents'">
+			where contents like '%'||#{search}||'%'
+		</if>
+	</select>
+
+	<select id="selectList" resultType="NoticeDTO" parameterType="ListData"> <!-- BoardDTO 타입으로 보내지만 NoticeDTO 타입으로 자동 형변환 -->
+		select * from 
+		(select rownum R, N.* from 
+		(select * from notice 
+		<if test="kind == 'title'">
+			where title like '%'||#{search}||'%'
+		</if>
+		<if test="kind == 'writer'">
+			where writer like '%'||#{search}||'%'
+		</if>
+		<if test="kind == 'contents'">
+			where contents like '%'||#{search}||'%'
+		</if>
+		order by num desc) N) 
+		where R between #{startRow} and #{lastRow}
+	</select>
+
+	<select id="selectOne" parameterType="int" resultType="NoticeDTO">
+		select * from notice where num=#{num}
+	</select>
+	
+	<insert id="insert" parameterType="NoticeDTO">
+		insert into notice values (board_seq.nextval,#{title},#{writer},#{contents},0,sysdate)
+	</insert>
+
+	<update id="update" parameterType="NoticeDTO">
+		update notice set title=#{title}, contents=#{contents} where num=#{num}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete notice where num=#{num}
+	</delete>
+
+</mapper>
