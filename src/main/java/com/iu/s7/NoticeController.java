@@ -3,11 +3,13 @@ package com.iu.s7;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iu.board.BoardDTO;
@@ -42,10 +44,10 @@ public class NoticeController {
 		return "board/boardWrite";
 	}
 	@RequestMapping(value="noticeWrite", method=RequestMethod.POST)
-	public ModelAndView noticeWrite(NoticeDTO noticeDTO) throws Exception{
+	public ModelAndView noticeWrite(NoticeDTO noticeDTO, MultipartFile [] file, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		int result = 0;
-		result = noticeService.insert(noticeDTO);
+		result = noticeService.insert(noticeDTO, file, session);
 		
 		// Result 방식 - 리턴 ModelAndView
 		if(result>0){

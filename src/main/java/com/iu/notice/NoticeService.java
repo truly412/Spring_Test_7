@@ -2,6 +2,10 @@ package com.iu.notice;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.iu.board.BoardDTO;
 import com.iu.board.BoardService;
 import com.iu.util.ListData;
@@ -30,7 +34,7 @@ public class NoticeService implements BoardService {
 	}
 
 	@Override
-	public int insert(BoardDTO boardDTO) throws Exception {
+	public int insert(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception {
 		return noticeDAO.insert(boardDTO);
 	}
 
