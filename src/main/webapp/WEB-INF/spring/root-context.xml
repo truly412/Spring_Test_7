@@ -14,5 +14,13 @@
    <context:component-scan base-package="com.iu.qna" use-default-filters="true">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	 <context:component-scan base-package="com.iu.file" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<context:component-scan base-package="com.iu.notice" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 		
 </beans>

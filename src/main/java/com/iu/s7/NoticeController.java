@@ -43,8 +43,9 @@ public class NoticeController {
 		model.addAttribute("board", "notice");
 		return "board/boardWrite";
 	}
+	
 	@RequestMapping(value="noticeWrite", method=RequestMethod.POST)
-	public ModelAndView noticeWrite(NoticeDTO noticeDTO, MultipartFile [] file, HttpSession session) throws Exception{
+	public ModelAndView noticeWrite(NoticeDTO noticeDTO, MultipartFile[] file, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		int result = 0;
 		result = noticeService.insert(noticeDTO, file, session);
