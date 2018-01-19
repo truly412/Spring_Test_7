@@ -37,11 +37,10 @@
 		select * from notice where num=#{num}
 	</select>
 	
-	<select id="num" resultType="int">
-		select board_seq.nextval from dual
-	</select>
-	
 	<insert id="insert" parameterType="NoticeDTO">
+		<selectKey resultType="int" order="BEFORE" keyProperty="num">
+			select board_seq.nextval from dual
+		</selectKey>
 		insert into notice values (#{num},#{writer},#{contents},#{title},0,sysdate)
 	</insert>
 

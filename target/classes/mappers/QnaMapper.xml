@@ -44,8 +44,11 @@
 
 	<!-- Insert -->
 	<insert id="insert" parameterType="QnaDTO">
+		<selectKey resultType="int" order="BEFORE" keyProperty="num"><!-- 결과로 int를 parameter의 num이라는곳에 매핑 -->
+			select board_seq.nextval from dual
+		</selectKey>
 		insert into qna values
-		(board_seq.nextval, #{title}, #{writer}, #{contents}, 0, sysdate,
+		(#{num}, #{title}, #{writer}, #{contents}, 0, sysdate,
 		board_seq.currval, 0, 0)
 	</insert>
 

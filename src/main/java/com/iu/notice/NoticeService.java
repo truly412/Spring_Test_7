@@ -51,14 +51,12 @@ public class NoticeService implements BoardService {
 		//FileDAO fileDAO = new FileDAO();//개발자가 직접 객체만들면 inject안시켜줌
 		
 		List<String> names = fs.savaer(file, filePath);
-		int num = noticeDAO.num();	//board_seq.nextval을 가져옴
-		boardDTO.setNum(num);
 		noticeDAO.insert(boardDTO);
 		for(int i=0;i<names.size();i++) {
 			FileDTO fileDTO = new FileDTO();
 			fileDTO.setFname(names.get(i));
 			fileDTO.setOname(file[i].getOriginalFilename());
-			fileDTO.setNum(num);
+			fileDTO.setNum(boardDTO.getNum());//위에 인서트 할때 boardDTO에 set해줬다
 			fileDAO.insert(fileDTO);
 		}
 		return 1;

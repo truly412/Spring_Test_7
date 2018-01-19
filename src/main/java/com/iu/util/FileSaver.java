@@ -16,8 +16,8 @@ public class FileSaver {
 		fileName = fileName.substring(fileName.lastIndexOf("."));
 		fileName = UUID.randomUUID().toString()+fileName;
 		//fileName = UUID.randomUUID().toString()+"_"+fileName;
-		File f = new File(filePath,fileName);
-		FileCopyUtils.copy(file.getBytes(), f);//저장할 소스 앞/ 뒤 파일객체
+		File f = new File(filePath,fileName);//저장할위치 //파일이름 의 파일객체생성
+		FileCopyUtils.copy(file.getBytes(), f);//저장할 소스 //파일객체 로 파일 저장
 		return fileName;
 	}
 	

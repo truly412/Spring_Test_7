@@ -27,10 +27,6 @@ public class NoticeDAO implements BoardDAO { //XML방식
 	public BoardDTO selectOne(int num) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"selectOne", num);
 	}
-	
-	public int num() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"num");//nextval번호리턴
-	}
 
 	@Override
 	public int insert(BoardDTO boardDTO) throws Exception {

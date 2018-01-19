@@ -23,6 +23,11 @@ public class NoticeController {
 
 	@Inject
 	private NoticeService noticeService;
+	
+	@RequestMapping(value="noticeView")
+	public void selectOne(int num) throws Exception {
+		
+	}
 
 	//List
 	@RequestMapping(value="noticeList", method=RequestMethod.GET)
@@ -35,7 +40,6 @@ public class NoticeController {
 		mv.setViewName("board/boardList");
 		return mv;
 	}
-
 
 	//Write (Insert)
 	@RequestMapping(value="noticeWrite", method=RequestMethod.GET)
