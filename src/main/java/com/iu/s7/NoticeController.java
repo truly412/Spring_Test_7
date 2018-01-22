@@ -24,11 +24,42 @@ public class NoticeController {
 	@Inject
 	private NoticeService noticeService;
 	
-	@RequestMapping(value="noticeView")
-	public void selectOne(int num) throws Exception {
-		
+	@RequestMapping(value="noticeUpdate", method=RequestMethod.GET)
+	public String Update(int num, Model model) throws Exception {
+		BoardDTO boardDTO=noticeService.selectOne(num);
+		model.addAttribute("view",boardDTO);
+		model.addAttribute("board","notice");
+		return "board/boardUpdate";
 	}
-
+	
+	@RequestMapping(value="noticeUpdate", method=RequestMethod.POST)
+	public void Update(NoticeDTO noticeDTO, MultipartFile[] file, HttpSession session) throws Exception {
+		return noticeService.update(noticeDTO,file,session);
+	}
+	
+	/*@RequestMapping(value="noticeDelete")
+	public void viewDelete(int num, HttpSession session) throws Exception {
+		noticeService.viewDelete(num, session);
+	}*/
+	
+	@RequestMapping(value="noticeDelete")
+	public String delete(int num,HttpSession session) throws Exception {
+		int reulst = noticeService.delete(num,session);
+		return "redirect:./noticeList";
+	}
+	
+	
+	//view
+	@RequestMapping(value="noticeView")
+	public ModelAndView selectOne(int num) throws Exception {
+		 BoardDTO boardDTO=noticeService.selectOne(num);
+		 ModelAndView mv = new ModelAndView();
+		 mv.addObject("view", boardDTO);
+		 mv.addObject("board", "notice");
+		 mv.setViewName("board/boardView");
+		return mv;
+	}
+	
 	//List
 	@RequestMapping(value="noticeList", method=RequestMethod.GET)
 	public ModelAndView selectList(ListData listData) throws Exception{
@@ -41,13 +72,14 @@ public class NoticeController {
 		return mv;
 	}
 
-	//Write (Insert)
+	//Write
 	@RequestMapping(value="noticeWrite", method=RequestMethod.GET)
 	public String noticeWrite(Model model) throws Exception{
 		model.addAttribute("board", "notice");
 		return "board/boardWrite";
 	}
 	
+	//Write
 	@RequestMapping(value="noticeWrite", method=RequestMethod.POST)
 	public ModelAndView noticeWrite(NoticeDTO noticeDTO, MultipartFile[] file, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
@@ -69,6 +101,7 @@ public class NoticeController {
 		return "redirect:./noticeList?curPage="; 
 		*/
 	}
+
 
 
 }

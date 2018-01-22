@@ -48,7 +48,7 @@ public class QnaService implements BoardService {
 		}
 		FileSaver fs = new FileSaver();
 		
-		List<String> names = fs.savaer(file, filePath);//저장할파일//저장할위치
+		List<String> names = fs.saver(file, filePath);//저장할파일//저장할위치
 		qnaDAO.insert(boardDTO);
 		
 		for(int i=0;i<names.size();i++) {
@@ -67,7 +67,7 @@ public class QnaService implements BoardService {
 	}
 
 	@Override
-	public int delete(int num) throws Exception {
+	public int delete(int num, HttpSession session) throws Exception {
 		return qnaDAO.delete(num);
 	}
 	

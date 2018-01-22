@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,13 +23,21 @@ public class FileSaver {
 		return fileName;
 	}
 	
-	public List<String> savaer(MultipartFile[] file, String filePath) throws Exception {
+	public List<String> saver(MultipartFile[] file, String filePath) throws Exception {
 		List<String> fileNames = new ArrayList<String>();
 		for(MultipartFile f : file) {
 			String fileName = this.saver(f, filePath);
 			fileNames.add(fileName);
 		}
 		return fileNames;
+	}
+	
+	public void delete(String fname,HttpSession session) throws Exception {
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		File f = new File(filePath+fname);
+		if(f.exists()){
+			f.delete();
+		}
 	}
 
 }

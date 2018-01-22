@@ -4,4 +4,20 @@
 	<insert id="insert" parameterType="FileDTO">
 		insert into files values(board_seq.nextval,#{num},#{fname},#{oname})
 	</insert>
+	<select id="selectList" parameterType="int" resultType="FileDTO">
+  			select * from files where num=#{num}
+  	</select>
+  	<update id="viewUpdate" parameterType="FileDTO">
+  		update files set fname=#{fname}, oname=#{oname} where num=#{num}
+  	</update>
+  	<delete id="viewDelete" parameterType="int">
+  		delete files where num=#{num}
+  	</delete>
+  	
+  	<delete id="delete" parameterType="int">
+  		delete files where num=#{num}
+  	</delete>
+  	<delete id="deleteFnum" parameterType="int">
+  		delete files where fnum=#{fnum}
+  	</delete>
 </mapper>

@@ -3,7 +3,6 @@ package com.iu.notice;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,16 @@ public class NoticeService implements BoardService {
 	@Autowired
 	private FileDAO fileDAO;
 
+	@Override
+	public int update(BoardDTO boardDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int viewUpdate(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception {
+		int result = noticeDAO.viewUpdate(boardDTO,file,session);
+		return result;
+	}
+	
 	@Override
 	public List<BoardDTO> selectList(ListData listData) throws Exception {
 		int totalCount = noticeDAO.totalCount(listData);
@@ -50,7 +59,7 @@ public class NoticeService implements BoardService {
 		FileSaver fs = new FileSaver();
 		//FileDAO fileDAO = new FileDAO();//개발자가 직접 객체만들면 inject안시켜줌
 		
-		List<String> names = fs.savaer(file, filePath);
+		List<String> names = fs.saver(file, filePath);
 		noticeDAO.insert(boardDTO);
 		for(int i=0;i<names.size();i++) {
 			FileDTO fileDTO = new FileDTO();
@@ -62,14 +71,61 @@ public class NoticeService implements BoardService {
 		return 1;
 	}
 
-	@Override
-	public int update(BoardDTO boardDTO) throws Exception {
-		return noticeDAO.update(boardDTO);
-	}
 
 	@Override
-	public int delete(int num) throws Exception {
-		return noticeDAO.delete(num);
+	public int delete(int num,HttpSession session) throws Exception {
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		List<FileDTO> ar = fileDAO.selectList(num);
+		int result = noticeDAO.delete(num);
+		result = fileDAO.delete(num);
+		for(FileDTO fileDTO : ar) {
+			try{
+			File file =  new File(filePath,fileDTO.getFname());
+			file.delete();
+			} catch (Exception e) {
+				//왠지모르지만 디비에는있는데 실제파일이없는경우 익셉션걸리면서 나머지가 안지워지고종료되니
+			}
+		}
+		
+		return result;
 	}
+/*
+	public void viewUpdate(int num, MultipartFile[] file, HttpSession session) throws Exception {
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		File f = new File(filePath);
+		if(!f.exists()){
+			f.mkdirs();
+		}
+		FileSaver fs = new FileSaver();
+		fs.delete(num, session);
+		List<String> names = fs.saver(file, filePath);
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setFname(fname);
+		fileDTO.setOname(oname);
+		
+		
+		fileDAO.viewUpdate(num);
+		noticeDAO.viewUpdate(num);
+	}
+	*/
+/*
+	public void viewDelete(int num, HttpSession session) throws Exception {
+		System.out.println("viewDelete in");
+		NoticeDTO noticeDTO =  new NoticeDTO();
+		noticeDTO = (NoticeDTO) noticeDAO.selectOne(num);
+		for (FileDTO f : noticeDTO.getFiles()) {
+			FileSaver fs = new FileSaver();
+			System.out.println(f.getFname());
+			
+			fs.delete(f.getFname(),session);
+		}
+		
+		
+		fileDAO.viewdelete(num);
+		noticeDAO.viewDelete(num);
+		
+	}
+*/
 
+	
 }

@@ -2,10 +2,10 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+<!-- 
 	<filter>
 		<filter-name>URIEncoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharatorEncodingFilter</filter-class><!-- spring제공 -->
+		<filter-class>org.springframework.web.filter.CharatorEncodingFilter</filter-class>spring제공
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
@@ -13,10 +13,10 @@
 	</filter>
 	
 	<filter-mapping>
-		<filter-name>URIEncoding</filter-name><!-- 변수 -->
-		<url-pattern>/*</url-pattern><!-- 모든  -->
+		<filter-name>URIEncoding</filter-name>변수
+		<url-pattern>/*</url-pattern>모든 
 	</filter-mapping>
-	
+	 -->
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
