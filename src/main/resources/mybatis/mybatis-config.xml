@@ -9,5 +9,6 @@
 		<typeAlias type="java.util.Map" alias="Map"/>
 		<typeAlias type="com.iu.util.ListData" alias="ListData"/>
 		<typeAlias type="com.iu.file.FileDTO" alias="FileDTO"/>
+		<typeAlias type="com.iu.member.MemberDTO" alias="MemberDTO"/>
   	</typeAliases>
   </configuration>
