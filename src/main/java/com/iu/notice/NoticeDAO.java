@@ -20,11 +20,6 @@ public class NoticeDAO implements BoardDAO { //XML방식
 	private SqlSession sqlSession;
 	private final String NAMESPACE = "NoticeMapper."; //변하지 않는 상수로 사용하기 위해 final (변수명은 모두 대문자)
 	
-	public int viewUpdate(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) {
-		
-		return 0;
-	}
-	
 	@Override
 	public List<BoardDTO> selectList(ListData listData) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"selectList", listData);
@@ -56,9 +51,6 @@ public class NoticeDAO implements BoardDAO { //XML방식
 		return sqlSession.selectOne(NAMESPACE+"totalCount", listData);
 	}
 
-	public int viewUpdate(int num) {
-		return sqlSession.update(NAMESPACE+"viewUpdate", num);
-	}
 
 	public int viewDelete(int num) {
 		return sqlSession.delete(NAMESPACE+"viewDelete", num);

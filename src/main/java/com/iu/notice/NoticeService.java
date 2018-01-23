@@ -30,8 +30,41 @@ public class NoticeService implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 	public int viewUpdate(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception {
-		int result = noticeDAO.viewUpdate(boardDTO,file,session);
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		File f = new File(filePath);
+		if(!f.exists()){
+			f.mkdirs();
+		}
+		FileSaver fs = new FileSaver();
+		List<String> names = fs.saver(file, filePath);
+		for(int i=0;i<names.size();i++) {
+			FileDTO fileDTO = new FileDTO();
+			fileDTO.setFname(names.get(i));
+			fileDTO.setOname(file[i].getOriginalFilename());
+			fileDTO.setNum(boardDTO.getNum());//위에 인서트 할때 boardDTO에 set해줬다
+			fileDAO.insert(fileDTO);
+		}
+		int result = noticeDAO.update(boardDTO);
+		return result;
+	}
+	
+	@Override
+	public int delete(int num,HttpSession session) throws Exception {
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		List<FileDTO> ar = fileDAO.selectList(num);
+		int result = noticeDAO.delete(num);
+		result = fileDAO.delete(num);
+		for(FileDTO fileDTO : ar) {
+			try{
+			File file =  new File(filePath,fileDTO.getFname());
+			file.delete();
+			} catch (Exception e) {
+				//왠지모르지만 디비에는있는데 실제파일이없는경우 익셉션걸리면서 나머지가 안지워지고종료되니
+			}
+		}
+		
 		return result;
 	}
 	
@@ -70,25 +103,7 @@ public class NoticeService implements BoardService {
 		}
 		return 1;
 	}
-
-
-	@Override
-	public int delete(int num,HttpSession session) throws Exception {
-		String filePath = session.getServletContext().getRealPath("resources/upload");
-		List<FileDTO> ar = fileDAO.selectList(num);
-		int result = noticeDAO.delete(num);
-		result = fileDAO.delete(num);
-		for(FileDTO fileDTO : ar) {
-			try{
-			File file =  new File(filePath,fileDTO.getFname());
-			file.delete();
-			} catch (Exception e) {
-				//왠지모르지만 디비에는있는데 실제파일이없는경우 익셉션걸리면서 나머지가 안지워지고종료되니
-			}
-		}
-		
-		return result;
-	}
+	
 /*
 	public void viewUpdate(int num, MultipartFile[] file, HttpSession session) throws Exception {
 		String filePath = session.getServletContext().getRealPath("resources/upload");

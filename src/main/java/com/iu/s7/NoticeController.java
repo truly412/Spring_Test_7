@@ -33,8 +33,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="noticeUpdate", method=RequestMethod.POST)
-	public void Update(NoticeDTO noticeDTO, MultipartFile[] file, HttpSession session) throws Exception {
-		return noticeService.update(noticeDTO,file,session);
+	public String Update(NoticeDTO noticeDTO, MultipartFile[] file, HttpSession session) throws Exception {
+		noticeService.viewUpdate(noticeDTO,file,session);
+		return "redirect:./noticeList";
 	}
 	
 	/*@RequestMapping(value="noticeDelete")
