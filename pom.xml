@@ -20,6 +20,28 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	
+		<!-- spring-tx//트랜잭션에 사용 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+	
+		<!-- Aspectjweaver//AOP의Advice를 핵심코드 안에 집어넣는데 사용 -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+	
+		<!-- Spring-aop//AOP하는거 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aop</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- File Upload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>

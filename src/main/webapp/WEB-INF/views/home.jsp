@@ -18,5 +18,7 @@
 		<a href="./member/memberView">Mypage</a>
 		<a href="./member/memberDelete">delete</a>
 	</c:if>
+	
+	<a href="./transfer">Transport</a>
 </body>
 </html>
