@@ -10,19 +10,37 @@
 	</insert>
 	
 	<select id="memberLogin" parameterType="MemberDTO" resultType="MemberDTO">
-		select * from member where id=#{id}
+		select * from member where id=#{id} and pw=#{pw}
 	</select>
 	
 	<select id="memberView" parameterType="String" resultType="MemberDTO">
 		select * from member where id=#{id}
 	</select>
 	
-	<update id="memberUpdate" parameterType="MemberDTO">
-		update member set id=#{id}, pw=#{pw}, name=#{name}, email=#{email}, phone=#{phone}, age=#{age}, job=#{job}
-		, fname=#{fname}, oname=#{oname}  where id=#{id}
-	</update>
-
-
+	<!-- Update -->
+   <!-- trim → <trim prefix="set" suffixOverrides=","></trim> -->
+   <update id="memberUpdate" parameterType="MemberDTO">
+      update member
+      <set>
+      pw=#{pw},
+      name=#{name},
+      email=#{email},
+      phone=#{phone},
+      age=#{age},
+      job=#{job},
+      <if test="fname != null">
+      fname=#{fname},
+      oname=#{oname}
+      </if>
+      </set>
+      where id=#{id}
+   </update>
+	
+	
+	
+	<delete id="memberDelete" parameterType="memberDTO">
+		
+	</delete>
 
 
 </mapper>

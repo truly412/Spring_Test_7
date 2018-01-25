@@ -32,5 +32,8 @@ public class MemberDAO {
 		return sqlSession.update(NAMESPACE+"memberUpdate", memberDTO);
 	}
 	
+	public int memeberDelete(MemberDTO memberDTO) {
+		return sqlSession.delete(NAMESPACE+"memeberDelete", memberDTO);
+	}
 
 }

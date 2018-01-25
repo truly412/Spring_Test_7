@@ -3,9 +3,7 @@ package com.iu.s7;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.core.annotation.SynthesizedAnnotation;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +18,19 @@ public class MemberController {
 	
 	@Inject
 	private MemberService memberService;
+	/*
+	public String memberDelete(HttpSession session,MemberDTO memberDTO) throws Exception {
+		memberService.memberDelete(memberDTO);
+	}*/
+	
+	@RequestMapping(value="memberFileDelete")
+	public ModelAndView memberFileDelete(MemberDTO memberDTO, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		int result = memberService.memberFileDelete(memberDTO,session);
+		mv.addObject("result", result);
+		mv.setViewName("member/fileDeleteResult");
+		return mv;
+	}
 	
 	@RequestMapping(value="memberIdCheck", method=RequestMethod.GET)
 	public ModelAndView memberIdCheck(String id) throws Exception {
@@ -95,11 +106,11 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="memberUpdate", method=RequestMethod.POST)
-	public ModelAndView memberUpdate(MemberDTO memberDTO) {
+	public ModelAndView memberUpdate(MemberDTO memberDTO, MultipartFile file, HttpSession session) {
 		ModelAndView mv =new ModelAndView();
 		int result = 0;
 		try {
-			result = memberService.memberUpdate(memberDTO);
+			result = memberService.memberUpdate(memberDTO, file, session);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

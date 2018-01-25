@@ -1,6 +1,7 @@
 package com.iu.member;
 
 public class MemberDTO {
+	
 	private String id;
 	private String pw;
 	private String name;
@@ -10,7 +11,6 @@ public class MemberDTO {
 	private String job;
 	private String fname;
 	private String oname;
-	
 	
 	public String getFname() {
 		return fname;
