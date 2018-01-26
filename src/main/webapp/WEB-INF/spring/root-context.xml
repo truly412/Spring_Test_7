@@ -32,13 +32,23 @@
 	<context:component-scan base-package="com.iu.aop.transfer" use-default-filters="true">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 		
-	<bean class="com.iu.aop.transfer.CardCheck" id="cardCheck"/>
+	<!-- <bean class="com.iu.aop.transfer.CardCheck" id="cardCheck"/> -->
+	<bean class="com.iu.aop.transfer.Ticket" id="ticket"/>
+	<bean class="com.iu.aop.transfer.Trip" id="trip"/>
 	
 	<aop:config>
-		<aop:aspect id="cardAspect" ref="cardCheck"><!-- aspect 여러객체에 공통적으로 적용 (cardCheck를) -->
-			<aop:pointcut expression="execution(* com.iu.aop.transfer..Transport.*())" id="trans"/><!-- *-contex.xml이 모든 걸 잡았던것처럼 공통을잡아줘라 -->
-			<aop:after-throwing method="check" pointcut-ref="trans"/><!-- transfer의 모든 메서드가 실행될때 check()메서드를 실행해라 -->
+	<!-- 
+		<aop:aspect id="cardAspect" ref="cardCheck">
+			<aop:pointcut expression="execution(* com.iu.aop.transfer..Transport.*())" id="trans"/>
+			<aop:around method="check" pointcut-ref="trans"/>
+		</aop:aspect>
+		 -->
+		<aop:aspect id="ticketAspect" ref="ticket">
+			<aop:pointcut expression="execution(* com.iu.aop.transfer..Trip.*())" id="triptt"/>
+			<aop:before method="getTicket" pointcut-ref="triptt"/>
 		</aop:aspect>
 	</aop:config>
 </beans>

@@ -47,5 +47,11 @@ public class HomeController {
 		transferService.start();
 		return "redirect:./";
 	}
-	
+	/*
+	@RequestMapping(value="/trip")
+	public String start2() {
+		tripService.start();
+		return "redirect:./";
+	}
+	*/
 }
