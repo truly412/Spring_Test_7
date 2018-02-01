@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
@@ -33,7 +35,7 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy><!-- aop관련 어노테이션을 읽겠다 -->
 		
 	<!-- <bean class="com.iu.aop.transfer.CardCheck" id="cardCheck"/> -->
 	<bean class="com.iu.aop.transfer.Ticket" id="ticket"/>
@@ -51,6 +53,25 @@
 			<aop:before method="getTicket" pointcut-ref="triptt"/>
 		</aop:aspect>
 	</aop:config>
+	
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="dataSource"/><!-- 오토커밋방지 공통적으로 해줘야하는것 위에 datasource가저옴 -->
+	</bean>
+	
+	<tx:annotation-driven proxy-target-class="true"/><!-- 트랜잭션 관련 어노테이션을 읽겠다 -->
+	
+	<!-- 
+	<tx:advice transaction-manager="transactionManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="RuntimeException"/>어떤 메서드를 롤백시킬거냐exeptio발생시롤백
+		</tx:attributes>	
+	</tx:advice>
+	<aop:config proxy-target-class="true">
+	aspect는 위에 advice랑 같
+		<aop:pointcut expression="execution(* com.iu.notice.NoticeService.*(..))" id="rtx"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="rtx"/>
+	</aop:config>
+ -->
 </beans>
 
 
